@@ -1,0 +1,62 @@
+import pyautogui
+import pyperclip
+import time
+import pandas
+
+#entrar no sistema (no link)
+pyautogui.PAUSE= 2
+pyautogui.hotkey("ctrl", "t")
+pyperclip.copy ("https://drive.google.com/drive/folders/149xknr9JvrlEnhNWO49zPcw0PW5icxga")
+pyautogui.hotkey ("ctrl", "v")
+pyautogui.press ("enter")
+time.sleep (4)
+
+#nagevar e encontrar a base de dados
+pyautogui.click (x=352, y=298, clicks=2)
+time.sleep (2)
+
+#download da base de dados
+pyautogui.click (x=377, y=337)
+pyautogui.click (x=1159, y=189)
+pyautogui.click (x=909, y=625)
+time.sleep (6)
+
+#Calcular os indicadores
+tabela = pandas.read_excel (r"C:\Users\henri\Downloads\Vendas - Dez.xlsx")
+display (tabela)
+Quantidade = tabela ["Quantidade"].sum()
+Faturamento = tabela ["Valor Final"].sum()
+
+print (Quantidade)
+print (Faturamento)
+
+#Entrar no Email
+pyautogui.hotkey ("ctrl", "t")
+pyperclip.copy ("https://mail.google.com/mail/u/0/#inbox")
+pyautogui.hotkey ("ctrl", "v")
+pyautogui.press ("enter")
+time.sleep (2)
+
+#mandar o email com os indicadores
+pyautogui.click (x=87, y=200)
+pyautogui.write ("henrique.bacarin@aluno.ifsp.edu.br")
+pyautogui.press ("tab")
+pyautogui.press ("tab")
+pyautogui.write ("Resultado Vendas")
+pyautogui.press ("tab")
+texto = f"""
+Boa noite!
+
+Segue abaixo a tabela de vendas e faturamento de hoje.
+
+Quantidade de vendas foi de: {Quantidade}
+O faturamento foi de: R${Faturamento}
+
+Atenciosamente,
+
+Henrique Bacarin.
+"""
+
+pyautogui.write (texto)
+pyautogui.press ("tab")
+tyautogui.press ("enter")
